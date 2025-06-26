@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 export function ProfileForm() {
 	const form = useForm<FormSchema>({
 		resolver: zodResolver(formSchema),
-		defaultValues: { email: "", username: "" },
+		defaultValues: { email: "", username: ""},
 	});
 
 	return (
