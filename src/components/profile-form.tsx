@@ -28,7 +28,7 @@ export function ProfileForm() {
 		<Card>
 			<CardContent>
 				<Form {...form}>
-					<form className="space-y-8" action={createPost}>
+					<form className="space-y-6" action={createPost}>
 						<FormField
 							control={form.control}
 							name="email"
