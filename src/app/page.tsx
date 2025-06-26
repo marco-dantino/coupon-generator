@@ -1,4 +1,6 @@
-import { Icons } from "@/components/icons";
+"use client";
+
+import { createPost } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import { unstable_ViewTransition as ViewTransition, use } from "react";
 
