@@ -9,7 +9,11 @@ export const formSchema = z.object({
 		.string({
 			required_error: "Name is required",
 		})
-		.min(3, "Name must be at least 3 characters"),
+		.min(3, "Name must be at least 3 characters")
+		.regex(
+			/^[A-Za-zÁÉÍÓÚáéíóúñÑ]+$/,
+			"El nombre solo puede contener letras sin espacios",
+		),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;

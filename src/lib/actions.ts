@@ -1,7 +1,9 @@
 "use server";
 
-import { formSchema } from "@/app/validation/formSchema";
 import { randomUUID } from "node:crypto";
+import type { FormSchema } from "@/app/validation/formSchema";
+import { formSchema } from "@/app/validation/formSchema";
+import { z } from "zod";
 
 interface User {
 	email: string;
@@ -9,12 +11,10 @@ interface User {
 	uuid: string;
 }
 
-export async function createPost(formData: FormData) {
-	const email: string = formData.get("email") as string;
-	const username: string = formData.get("username") as string;
+export async function createPost({ email, username }: FormSchema) {
 	const uuid: string = randomUUID();
 
-	const values:Omit<User,"uuid"> = formSchema.parse({
+	const values: Omit<User, "uuid"> = formSchema.parse({
 		email,
 		username,
 	});
@@ -22,13 +22,13 @@ export async function createPost(formData: FormData) {
 	const user: User = {
 		...values,
 		uuid,
-	}
-	
+	};
+
 	const url = process.env.AIRTABLE_WEBHOOK_URL ?? "";
 
-	const json = JSON.stringify(user); 
+	const json = JSON.stringify(user);
 
-	console.log("JSONNNNNNNNNNNNNNNNsN", json);
+	console.log("JSON CONSOLE LOG", json);
 
 	const options = {
 		method: "POST",
@@ -42,5 +42,9 @@ export async function createPost(formData: FormData) {
 	console.log("VALUES", user);
 
 	const res = await fetch(url, options);
+
+	// if (res.ok) {
+	// 	alert
+	// }
 	console.log("Response:", res);
 }

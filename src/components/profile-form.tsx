@@ -16,19 +16,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { createPost } from "@/lib/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 
 export function ProfileForm() {
 	const form = useForm<FormSchema>({
 		resolver: zodResolver(formSchema),
-		defaultValues: { email: "", username: ""},
+		defaultValues: { email: "", username: "" },
 	});
+
+	const onSubmit = async (values: FormSchema) => {
+		console.log(values);
+		const formData = new FormData();
+		await createPost(values);
+	};
 
 	return (
 		<Card>
 			<CardContent>
 				<Form {...form}>
-					<form className="space-y-6" action={createPost}>
+					<form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
 						<FormField
 							control={form.control}
 							name="email"
